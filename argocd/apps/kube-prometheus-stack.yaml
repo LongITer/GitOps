@@ -14,7 +14,6 @@ spec:
         prometheus:
           prometheusSpec:
             serviceMonitorSelectorNilUsesHelmValues: false
-
         alertmanager:
           config:
             global:
@@ -22,7 +21,7 @@ spec:
               smtp_smarthost: 'smtp.gmail.com:587'
               smtp_from: 'longiter04@gmail.com'
               smtp_auth_username: 'longiter04@gmail.com'
-              smtp_auth_password: 'olkp oyfs dmun ndia' # Hệ thống tự động xóa bỏ khoảng trắng ngầm khi nạp
+              smtp_auth_password: 'olkpoyfsdmunndia'
               smtp_require_tls: true
             route:
               group_by: ['alertname']
@@ -30,7 +29,7 @@ spec:
               group_interval: 10s
               repeat_interval: 1h
               receiver: 'email-notifications'
-            receivers: #  ĐÃ ĐƯỢC CĂN THẲNG HÀNG VỚI global VÀ route
+            receivers:
             - name: 'email-notifications'
               email_configs:
               - to: 'trandbaolong@dtu.edu.vn'
