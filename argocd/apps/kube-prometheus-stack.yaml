@@ -14,6 +14,28 @@ spec:
         prometheus:
           prometheusSpec:
             serviceMonitorSelectorNilUsesHelmValues: false
+        
+        # ⚠ SỬA VÀ BỔ SUNG KHỐI CẤU HÌNH ALERTMANAGER DƯỚI ĐÂY
+        alertmanager:
+          config:
+            global:
+              resolve_timeout: 5m
+              smtp_smarthost: 'smtp.gmail.com:587'
+              smtp_from: 'longiter04@gmail.com'          # Thay bằng Gmail gửi (ví dụ: bany-abc@gmail.com)
+              smtp_auth_username: 'longiter04@gmail.com'  # Trùng với email ở trên
+              smtp_auth_password: 'olkp oyfs dmun ndia'         # Chuỗi viết liền 16 ký tự lấy từ Google Account
+              smtp_require_tls: true
+            route:
+              group_by: ['alertname']
+              group_wait: 10s
+              group_interval: 10s
+              repeat_interval: 1h
+              receiver: 'email-notifications'
+            receivers:
+            - name: 'email-notifications'
+              email_configs:
+              - to: 'trandbaolong@dtu.edu.vn'       # Điền email bạn muốn nhận thư báo (có thể trùng email gửi ở trên)
+                send_resolved: true                                     # Tự động gửi thư báo "Đã sửa xong" khi bạn chạy git revert
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
