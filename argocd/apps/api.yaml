@@ -6,7 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: HEAD
+    # ⚠️ CHÚ Ý HAI DÒNG DƯỚI ĐÂY
+    repoURL: https://github.com/LongITer/GitOps
     path: k8s-api
     targetRevision: HEAD
   destination:
