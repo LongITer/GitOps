@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: api-slo-alerts
+  namespace: demo
+  labels:
+    release: kube-prometheus-stack # Label bắt buộc để Prometheus quét thấy rule này
+spec:
+  groups:
+  - name: api-error-rates
+    rules:
+    - alert: ApiSuccessRateSLOViolation
+      expr: |
+        sum(rate(flask_http_request_duration_seconds_count{namespace="demo",status=~"5.*"}[2m]))
+        /
+        sum(rate(flask_http_request_duration_seconds_count{namespace="demo"}[2m])) > 0.05
+      for: 1m  # Nếu vi phạm liên tục trong 1 phút thì chính thức chuyển sang trạng thái Firing
+      labels:
+        severity: critical
+      annotations:
+        summary: "SLO Violation: API Error Rate is too high on {{ $labels.instance }}"
+        description: "The HTTP 5xx error rate for the api service in demo namespace is currently {{ $value | humanizePercentage }}, which violates the SLO threshold of < 5%."
