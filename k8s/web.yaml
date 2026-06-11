@@ -31,7 +31,7 @@ spec:
           image: nginx:1.27
           envFrom:
             - configMapRef:
-                name: web-config
+                name: web-config # test trigger action
 
 ---
 apiVersion: v1
