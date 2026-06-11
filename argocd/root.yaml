@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+spec:
+  project: default  # Nên thêm dòng này để xác định project (thường là default)
+  source:
+    repoURL: https://github.com/LongITer/GitOps
+    targetRevision: HEAD  # Nên thêm dòng này để chỉ định branch (ví dụ: HEAD hoặc main)
+    path: argocd/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
