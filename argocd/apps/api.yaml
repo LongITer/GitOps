@@ -7,9 +7,9 @@ spec:
   project: default
   source:
     # ⚠️ CHÚ Ý HAI DÒNG DƯỚI ĐÂY
-    repoURL: https://github.com/LongITer/GitOps
+    repoURL: https://github.com/LongITer/GitOps.git
     path: k8s-api
-    targetRevision: main
+    targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
     namespace: demo
