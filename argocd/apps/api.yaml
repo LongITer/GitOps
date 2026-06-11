@@ -9,7 +9,7 @@ spec:
     # ⚠️ CHÚ Ý HAI DÒNG DƯỚI ĐÂY
     repoURL: https://github.com/LongITer/GitOps
     path: k8s-api
-    targetRevision: HEAD
+    targetRevision: main
   destination:
     server: https://kubernetes.default.svc
     namespace: demo
