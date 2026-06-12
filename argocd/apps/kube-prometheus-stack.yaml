@@ -14,26 +14,29 @@ spec:
         prometheus:
           prometheusSpec:
             serviceMonitorSelectorNilUsesHelmValues: false
+        
         alertmanager:
-          config:
-            global:
-              resolve_timeout: 5m
-              smtp_smarthost: 'smtp.gmail.com:587'
-              smtp_from: 'longiter04@gmail.com'
-              smtp_auth_username: 'longiter04@gmail.com'
-              smtp_auth_password: 'olkpoyfsdmunndia'
-              smtp_require_tls: true
-            route:
-              group_by: ['alertname']
-              group_wait: 10s
-              group_interval: 10s
-              repeat_interval: 1h
-              receiver: 'email-notifications'
-            receivers:
-            - name: 'email-notifications'
-              email_configs:
-              - to: 'trandbaolong@dtu.edu.vn'
-                send_resolved: true
+          alertmanagerSpec:
+            # Ép Alertmanager đọc khối cấu hình global bên dưới thay vì mặc định
+            configRawYaml: |
+              global:
+                resolve_timeout: 5m
+                smtp_smarthost: 'smtp.gmail.com:587'
+                smtp_from: 'longiter04@gmail.com'
+                smtp_auth_username: 'longiter04@gmail.com'
+                smtp_auth_password: 'olkpoyfsdmunndia'
+                smtp_require_tls: true
+              route:
+                group_by: ['alertname']
+                group_wait: 10s
+                group_interval: 10s
+                repeat_interval: 1h
+                receiver: 'email-notifications'
+              receivers:
+              - name: 'email-notifications'
+                email_configs:
+                - to: 'trandbaolong@dtu.edu.vn'
+                  send_resolved: true
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
